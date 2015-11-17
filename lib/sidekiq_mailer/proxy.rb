@@ -16,16 +16,12 @@ class Sidekiq::Mailer::Proxy
     Sidekiq::Mailer::Worker.client_push(to_sidekiq)
   end
 
-  def deliver_now
-    deliver
-  end
-
   def excluded_environment?
     Sidekiq::Mailer.excludes_current_environment?
   end
 
   def deliver!
-    actual_message.deliver
+    actual_message.deliver_now
   end
 
   def method_missing(method_name, *args)
